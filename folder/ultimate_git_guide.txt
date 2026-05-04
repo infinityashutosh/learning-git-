@@ -1,0 +1,3 @@
+
+## multiple .gitignore
+If a parent directory says "ignore all .txt files," but the child directory has a rule that says "don't ignore .txt files" (using the ! negation symbol), the child directory's rule wins for that specific folder.
