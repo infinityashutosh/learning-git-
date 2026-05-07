@@ -37,3 +37,4 @@ If you want to be more surgical and only ignore files in a specific branch of yo
     This will only ignore debug.log if it is exactly in that specific grandchild folder.
 
 
+lest say I add a line in ultimatge_git_guide.md
