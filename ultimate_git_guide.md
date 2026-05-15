@@ -37,10 +37,24 @@ If you want to be more surgical and only ignore files in a specific branch of yo
     This will only ignore debug.log if it is exactly in that specific grandchild folder.
 
 
-lest say I add a line in ultimatge_git_guide.md
+
+
+Branch deletion : 
+
+git branch -d <branch name >
+
+
+
+
+
 
 
 ## Production reversal 
+
+1. git log -n 5 --oneline
+2. git revert <commit id>
+3. I don't know what's the third step so just try it out anyways and figure it out
+
 
  how to revert changes in production , once the code is pushed
 
@@ -95,3 +109,11 @@ Scenario	Recommended Command
 Team Project / Production	git revert <commit-id>
 Mistake was just made (Solo project)	git reset --hard HEAD~1
 Only want to undo a specific file	git checkout HEAD~1 -- path/to/file.txt
+
+
+so this line should be stashed and this won't come to the master branch if I switch now . 
+
+
+git restore 
+git reset hard/soft - undo commits till a specific point 
+git revert - basically reverts the changes made in that specific commit 
