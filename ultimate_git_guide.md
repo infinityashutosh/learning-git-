@@ -38,3 +38,60 @@ If you want to be more surgical and only ignore files in a specific branch of yo
 
 
 lest say I add a line in ultimatge_git_guide.md
+
+
+## Production reversal 
+
+ how to revert changes in production , once the code is pushed
+
+When code hits "production" and something goes wrong, the goal is to restore service as quickly as possible. In a professional environment, you have two main ways to handle this: Reverting (creating a new commit that undoes the changes) or Resetting (moving the branch pointer back).
+
+Since you've already pushed the code to a remote server (like GitHub), git revert is almost always the safer choice.
+1. The Safe Way: git revert
+
+This is the "Forward-Fix" method. Instead of deleting history, Git calculates the exact opposite of your bad commit and creates a new commit to cancel it out.
+
+Step 1: Find the Commit ID
+Look at your history to find the "SHA" (the long string of numbers/letters) of the bad commit.
+PowerShell
+
+git log --oneline
+
+Step 2: Revert it
+PowerShell
+
+git revert <commit-id>
+
+    What happens: Windows might open a text editor (like Notepad or Vim) asking for a commit message. Just save and close it.
+
+    The Result: Your folder now has a new commit that un-does the work.
+
+Step 3: Push to Production
+PowerShell
+
+git push origin master
+
+Why this is best: It keeps the history honest. Everyone else on the team will see exactly what happened and why the fix was made.
+2. The "Undo" Way: git reset (Use with Caution)
+
+If you are the only one working on the project and you want to "wipe away" the mistake as if it never existed, you can reset the branch.
+
+Step 1: Move the branch back one step
+PowerShell
+
+git reset --hard HEAD~1
+
+    --hard means "delete the changes from my files too." Warning: This erases unsaved work.
+
+Step 2: Force Push
+Because the remote server (GitHub) now has a "newer" version than your computer, it will reject a normal push. You have to force it:
+PowerShell
+
+git push origin master --force
+
+Why this is risky: If anyone else pulled your "bad" code, their Git will break when they try to sync because you "rewrote history." In production, --force is usually disabled for safety.
+3. Which one should you use?
+Scenario	Recommended Command
+Team Project / Production	git revert <commit-id>
+Mistake was just made (Solo project)	git reset --hard HEAD~1
+Only want to undo a specific file	git checkout HEAD~1 -- path/to/file.txt
